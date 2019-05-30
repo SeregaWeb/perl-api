@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style lang="">
+        .card{
+            display: flex;
+            flex-direction: column;
+            width: 33%;
+        }
+        .card-desk{
+            font-size: 18px;
+            font-family: monospace,sans-serif;
+            font-weight: 600;
+            color: #000;
+        }
+        .card-img{
+            width: 100%;
+            height: auto;
+        }
+        .card-text{
+            font-size: 14px;
+            font-family: monospace,sans-serif;
+            font-weight: 500;
+            color: #999999;
+        }
+        .card-btn{
+            text-align: center;
+            padding: 5px 10px;
+            background-color: lightskyblue;
+        }
+        .print-res{
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <p>
+    <button onclick="getAll()">all books</button>
+    <button onclick="getOne(1)">one book</button>
+    <button onclick="getAuthors()">all authors</button>
+    <button onclick="getGenres()">all genres</button>
+    <button onclick="getOneAuthor(1)">books author</button>
+    <button onclick="getOneGenre(1)">books genres</button></p>
+    <div class="print-res"></div>
+</body>
+</html>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+<script>
+    $( document ).ready(function() {
+    console.log( "ready!" );
+
+    $.get( "router/router.cgi", { controller: "books", method: "all" }, function( data ) {
+        alert( "Load was performed." );
+        let myArr = parceStringInArray(data);
+        
+        for (var i = 0 ; i < myArr.length; i++){
+                var template = "<div class='card'>"+
+                    "<img class='card-img' src='"+myArr[i][3]+"' alt='"+myArr[i][1]+"'>"+
+                    "<p class='card-desk'>"+myArr[i][1]+"</p>"+
+                    "<p class='card-text'>"+myArr[i][2]+"</p>"+
+                    "<button class='card-btn' data-id='"+myArr[i][0]+"'>show</button>"
+                "</div>"; 
+            $('.print-res').append(template);
+        }
+    });
+
+    });
+
+    function parceStringInArray(data){
+        var arr = [];
+        for (var i = 0 ; i < data.length; i++){
+            console.log(data[i]);
+            string = data[i].replace(/["[]/g, '');
+            string = string.slice(0, -1);
+            string = string.split(',');
+            arr.push(string);
+        }
+        return arr;
+    }
+
+    function getAll(){
+            // $('.print-res').html('');
+            $.get( "router/router.cgi", { controller: "books", method: "all" }, function( data ) {
+            // $('.print-res').html( data );
+            console.log(JSON.parse(data));
+            alert( "Load was performed." );
+            });
+        }
+        function getOne(id){
+            $('.print-res').html('');
+            $.get( "router/router.cgi", { controller: "books", method: "one" , index: id }, function( data ) {
+            $( ".print-res" ).html( data );
+            alert( "Load was performed." );
+            });
+        }
+        function getAuthors(){
+            $('.print-res').html('');
+        $.get( "router/router.cgi", { controller: "authors", method: "all" }, function( data ) {
+            $( ".print-res" ).html( data );
+            alert( "Load was performed." );
+        });
+        }
+        function getGenres(){
+            $('.print-res').html('');
+        $.get( "router/router.cgi", { controller: "genres", method: "all" }, function( data ) {
+            $( ".print-res" ).html( data );
+            alert( "Load was performed." );
+        });
+        }
+        function getOneAuthor(id)
+        {
+            $('.print-res').html('');
+            $.get( "router/router.cgi", { controller: "authors", method: "one", index: id }, function( data ) {
+            $( ".print-res" ).html( data );
+            alert( "Load was performed." );
+        });
+        }
+        function getOneGenre(id)
+        {
+            $('.print-res').html('');
+            $.get( "router/router.cgi", { controller: "genres", method: "one", index: id }, function( data ) {
+            $( ".print-res" ).html( data );
+            alert( "Load was performed." );
+        });
+        }
+</script>
