@@ -1,4 +1,4 @@
-package model::books_model;
+package model::genres_model;
 use Data::Dumper;
 use controller::controller_books;
 use controller::controller_autors;

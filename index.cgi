@@ -18,7 +18,7 @@ use controller::controller_a;
 
 
 print "Content-type: application/json\n\n";
-
+print "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 my $json = {
     cards => [1..5],
     repairs => [6..10],

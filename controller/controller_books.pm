@@ -30,6 +30,7 @@ sub get_book_by_id
 {
     my ($h,$id) = @_;
     #print Dumper($id);
+    #print Dumper($id);
     my $c = model::books_model->get_book($id);
     return $c;
     #print "$c";

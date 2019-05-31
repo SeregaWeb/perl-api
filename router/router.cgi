@@ -45,8 +45,7 @@ ReadParse();
 #print "<pre>";
 my $uri_test = $ENV{'REQUEST_URI'};
 my $dir = $ENV{'PATH_INFO'};
-my $string = $uri_test;
-#print $string;
+print Dumper($ENV{'REQUEST_URI'});
 #print "\n";
 #$string =~ s/ .*? .*&method= /$1/gx; рабочий метод
 #$string =~ s/ .*? .*?(controller=.+?) /$1/gx; #выбрать все
@@ -73,40 +72,49 @@ sub test ()
 
 my $controller = $in{'controller'};
 my $method = $in{'method'};
+my $id = $in{'index'};
+#print Dumper($id,$method,$controller);
 
+# yo controllers! 
+
+if($controller eq "books" && $method eq "one"){
+        #print 'mothod1';
+        print controller::controller_books->get_book_by_id($id);
+}else{
+        print '';
+}
 
 if($controller eq "books" && $method eq "all"){
-        #print 'FUCK';
+        #print 'mothod2';
         print controller::controller_books->all_books();
 }else{
         print '';
 }
 
 if($controller eq "genres" && $method eq "all"){
+        #print 'mothod3';
         print controller::controller_genres->all_genres();
 }else{
         print '';
 }
 
 if($controller eq "authors" && $method eq "all"){
+        #print 'mothod4';
         print controller::controller_autors->all_autors();
 }else{
         print '';
 }
 
-if($controller eq "books" && $method eq "one"){
-        print controller::controller_books->get_book_by_id(1);
-}else{
-        print '';
-}
 
 if($controller eq "authors" && $method eq "one"){
+        #print 'mothod5';
         print controller::ccontroller_autors->get_autor_by_id(1);
 }else{
         print '';
 }
 
 if($controller eq "genres" && $method eq "one"){
+        #print 'mothod6';
         print controller::ccontroller_genre->get_genre_by_id(1);
 }else{
         print '';
