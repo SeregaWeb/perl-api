@@ -85,52 +85,36 @@ use Scalar::Util qw(looks_like_number);
           return @dept;
       }
 
-sub select
-      {
-        #принемается массив полей и массив таблиц
-        #id и строка условия  
-        my ($h,$id,@fields_what,@fields_from,$where) = @_;
+
+#(test mode)
+sub select 
+    {
+        #принемаем массив полей, массив таблиц, id, условие
+        my ($h,$query) = @_;
+        #print "DB ask:\n".Dumper($query)."\n";
+
+
         my @dept;
         my ($dbh) = $myConnection;
-        #разбиваем массивы в строки через запятую
-        my $str_what = join(",", @fields_what);
-        my $str_from = join(",", @fields_from);
-        my $w;
+        #подготовка и отправка запроса
+        my $sth = $dbh->prepare($query);
+        $sth->execute();
 
-        #формируем запрос
-        my $sql_str = "SELECT $str_what FROM $str_from ";
-        #добавим условие если есть
-        unless ( $where ) {
-            # если строка пустая (reserved)
-        } else {
-            # если строка не пустая
-            $w = " WHERE id=".$where;
-        }
-        $sql_str .= $w;
-
-
-            #if (looks_like_number($id))
-            #{
-            #    $sql .= " WHERE id=$id";
-                #print 'NUL';
-            #}
-
-            #подготовка и отправка запроса
-          my $sth = $dbh->prepare($sql);
-          $sth->execute();
-
-            #забираем и кладем в массив
-            while (@result = $sth->fetchrow_array()) {
+        #забираем и кладем в массив
+        while (@result = $sth->fetchrow_array())
+        {
                 my $j=encode_json(\@result);
                 push @dept,$j;
                 #push %ages,@result;
                 #print Dumper(%ages);
-            }
+        }
 
           $sth->finish();
             #возвращаем массив строк
+
+            #print "DB answear:\n".Dumper(@dept);
           return @dept;
-      }
+    }
      
 
       sub update_query

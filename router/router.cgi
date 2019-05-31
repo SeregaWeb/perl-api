@@ -45,7 +45,7 @@ ReadParse();
 #print "<pre>";
 my $uri_test = $ENV{'REQUEST_URI'};
 my $dir = $ENV{'PATH_INFO'};
-print Dumper($ENV{'REQUEST_URI'});
+#print Dumper($ENV{'REQUEST_URI'});
 #print "\n";
 #$string =~ s/ .*? .*&method= /$1/gx; рабочий метод
 #$string =~ s/ .*? .*?(controller=.+?) /$1/gx; #выбрать все
@@ -84,6 +84,8 @@ if($controller eq "books" && $method eq "one"){
         print '';
 }
 
+
+
 if($controller eq "books" && $method eq "all"){
         #print 'mothod2';
         print controller::controller_books->all_books();
@@ -105,21 +107,20 @@ if($controller eq "authors" && $method eq "all"){
         print '';
 }
 
+if($controller eq "genres" && $method eq "one"){
+        #print 'mothod6';
+        print controller::controller_genres->get_genre_by_id(1);
+}else{
+        print '';
+}
 
 if($controller eq "authors" && $method eq "one"){
         #print 'mothod5';
-        print controller::ccontroller_autors->get_autor_by_id(1);
+        print controller::controller_autors->get_autor_by_id(1);
 }else{
         print '';
 }
-
-if($controller eq "genres" && $method eq "one"){
-        #print 'mothod6';
-        print controller::ccontroller_genre->get_genre_by_id(1);
-}else{
-        print '';
-}
-
+#print Dumper(controller::controller_autors->get_autor_by_id(1));
 #result();
     ##### test router
     #print router::router->test();
@@ -142,5 +143,6 @@ if($controller eq "genres" && $method eq "one"){
     #GET AUTHOR BY ID
     #print controller::controller_books->get_book_by_id(2);
 
-
+        
     # print controller::controller_books->all_books();
+    

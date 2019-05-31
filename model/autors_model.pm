@@ -5,7 +5,7 @@ use controller::controller_autors;
 use controller::controller_genres;
 use utilities::database;
 use JSON;
-
+use Scalar::Util qw(looks_like_number);
 
 sub test {
     my $a = 'Model test OK';
@@ -37,6 +37,44 @@ sub get_autors_books
 }
 
 
+# получить все поля из двух таблиц (test mode)
+sub get_fields_from_tables_by_id
+{
+    my ($h,$id,@fields,@tables,$where) = @_;
+    my $db = utilities::database->connect();
+    #хардкодим поля и таблицы
+    my @fields = ('books.id','books.name','description','picture');
+    my @tables = ('books','books_autors','autors');
+    #хардкодим условие
+
+    #формируем запрос
+    my $f = join(",", @fields);
+    my $t = join(",", @tables);
+    my $querystring = "SELECT $f FROM $t ";
+
+    my $w;
+    # если прилетел id число 
+    if (looks_like_number($id))
+            {
+                unless ( $id ) {
+                    # если он пустой
+                } else {
+                    # если id не пустой формируем условие
+                $w = (' WHERE books.id=books_autors.id_book AND autors.id=books_autors.id_autor AND  id_autor='.$id);
+                }
+            }
+    $querystring .= $w;
+    #print "MODEL\n ---- \n";
+
+    # конвертируем в JSON
+    my @res = $db->select($querystring);
+    my $sb_json = encode_json(\@res);
+
+    # отдаем строку
+    return $sb_json;
+}
+
+
 # получаем автора по ID
 sub get_autor
 {
@@ -46,11 +84,6 @@ sub get_autor
     # конвертируем в JSON
     my @res = $db->select_query($id);
     my $sb_json = encode_json(\@res);
-    #$sb_json =~ s/\[/\{/gx;
-    #$sb_json =~ s/\]/\}/gx;
-    #$sb_json =~ s/\\//gx;
-    #$sb_json =~ s/\"\{/\{/gx; #fix "{
-    #$sb_json =~ s/\}\"/\}/gx; #fix
     # отдаем строку
     return $sb_json;
 }
