@@ -1,4 +1,8 @@
-#!/usr/bin/perl -w 
+#!/usr/bin/perl -w
+
+#################
+##### user7 #####
+#################
 
 use strict;
 use warnings;
@@ -109,14 +113,14 @@ if($controller eq "authors" && $method eq "all"){
 
 if($controller eq "genres" && $method eq "one"){
         #print 'mothod6';
-        print controller::controller_genres->get_genre_by_id(1);
+        print controller::controller_genres->get_genre_by_id($id);
 }else{
         print '';
 }
 
 if($controller eq "authors" && $method eq "one"){
         #print 'mothod5';
-        print controller::controller_autors->get_autor_by_id(1);
+        print controller::controller_autors->get_autor_by_id($id);
 }else{
         print '';
 }

@@ -23,14 +23,80 @@
 .card-btn{
     text-align: center;
     padding: 5px 10px;
-    background-color: lightskyblue;
+    background-color: #3c7192;
+    color: #fff;
 }
+
+.one{
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+}
+.one .card-desk{
+    font-size: 22px;
+    text-shadow: 4px -1px 4px #3c7192;
+}
+.one .card-img{
+    max-width: 400px;
+    min-width: 300px;
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+}
+.one div{
+    min-width: 40%;
+}
+
 .print-res{
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     height: auto;
+    justify-content: center;
 }
-.info{display: flex;
+.info{
+    display: flex;
+    flex-direction: column;
 
+    
+    
+}
+.list-info{
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #3c7192;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn{
+    padding: 5px 10px;
+    background-color:  #3c7192;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #fff;
+    
+}
+.btn:hover{
+    background-color: blue;
+}
+.name-list{
+    text-align: center;
+}
+.title{
+    text-transform: uppercase;
+    color: #3c7192;
+    font-family: sans-serif;
+    font-weight: 900;
+}
+.title{
+    text-align: center;
 }
